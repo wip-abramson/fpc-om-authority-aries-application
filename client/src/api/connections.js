@@ -6,8 +6,28 @@ export function createInvite() {
     return apiInstance.get(path)
 }
 
-export function checkActive(connectionId) {
-    const path = `/connection/${connectionId}/active`
+export function checkTrusted(connectionId) {
+    const path = `/connection/${connectionId}/trusted`
 
     return apiInstance.get(path)
+}
+
+export function createDataScientistInvite(connectionId, name, scope) {
+    const path = `/connection/${connectionId}/datascientist/new`
+
+    return apiInstance.post(path, {
+        "name": name,
+        "scope": scope
+    })
+
+}
+
+export function createDataOwnerInvite(connectionId, name, domain) {
+    const path = `/connection/${connectionId}/dataowner/new`
+
+    return apiInstance.post(path, {
+        "name": name,
+        "domain": domain
+    })
+
 }

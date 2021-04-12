@@ -1,6 +1,6 @@
 from aiohttp import web
 from routes import setup_routes
-from agent_controller import initialise
+from om_authority_agent import initialise
 import asyncio
 import aiohttp_cors
 

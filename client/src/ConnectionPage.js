@@ -1,25 +1,34 @@
 import React from 'react'
+import DataOwnerTab from "./DataOwnerTab";
+import DataScientistTab from "./DataScientistTab";
 
 const ConnectionPage = ({connectionId}) => {
 
+    let [dataScientistTab, setDataScientistTab] = React.useState(null)
+    let [dataOwnerTab, setDataOwnerTab] = React.useState(null)
+
+
+
     return (<div className="connection-page">
 
-        <h1>Congratulations, you now have a connection with {connectionId}</h1>
-        <div className="main-text">
-            <p>The rest is up to you. Using this connectionId you can engage in any number of protocols with their agent. Such as:
-                <ul>
-                    <li>Issuing them a credential</li>
-                    <li>Verifying some attributes from them</li>
-                    <li>Simply using this ID as a primary key for the application you are developing, enabling sign on through the authentcation as this identifier (Scanning the QrCode)</li>
-                    <li>Using custom protocols such as sending attachments</li>
-                </ul>
-                When designing SSI applications, it is important to consider which actor is veiwing this client. Is it the credential holder, authenticating with the application in order to access a service. Or is it an issuer/verifier using the application in order to request verifications or issue credentials to certain connections.
-            </p>
-            <h3>If you need any help you can check out the tutorials in the <a href="https://github.com/OpenMined/PyDentity" target="_blank">PyDentity repository</a> or reach out on the <a href="https://blog.openmined.org/how-to-get-involved-into-openmined/" target="_blank">OpenMined slack</a>.</h3>
+        <h1>Congratulations, you now managed to authenticate with the OM Authority Agent. You have established a connection - {connectionId}</h1>
 
+
+
+        <h2>Now you can generate invitations for your Data Scientist and Data Owner agents running in Juypter Notebooks</h2>
+        <div>
+            <button onClick={() => {
+                setDataOwnerTab(false)
+                setDataScientistTab(true)
+            }}>Data Scientist</button>
+            <button onClick={() => {
+                setDataScientistTab(false)
+                setDataOwnerTab(true)
+            }}>Data Owner</button>
         </div>
 
-        <h2>Play, Learn, Experiment. Have fun! Build something cool :)</h2>
+        {dataScientistTab && <DataScientistTab connectionId={connectionId}/>}
+        {dataOwnerTab && <DataOwnerTab connectionId={connectionId}/>}
     </div>)
 }
 

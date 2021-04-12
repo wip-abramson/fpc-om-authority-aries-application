@@ -2,21 +2,21 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Invite from './Invite';
-import {checkActive} from "./api/connections";
+import {checkTrusted} from "./api/connections";
 import ConnectionPage from './ConnectionPage'
 function App() {
 
   let [connectionId, setConnectionId] = React.useState(null)
-    let [connectionActive, setConnectionActive] = React.useState(false)
+    let [connectionTrusted, setConnectionTrusted] = React.useState(false)
 
     React.useEffect(() => {
 
-        if (connectionId && !connectionActive) {
+        if (connectionId && !connectionTrusted) {
             const interval = setInterval(() => {
-                checkActive(connectionId).then(response => {
-                    console.log("ACTIVE", response.data.active)
-                    if (response.data.active) {
-                        setConnectionActive(response.data.active)
+                checkTrusted(connectionId).then(response => {
+                    console.log("ACTIVE", response.data.trusted)
+                    if (response.data.trusted) {
+                        setConnectionTrusted(response.data.trusted)
                         return () => clearInterval(interval);
                     }
 
@@ -26,7 +26,7 @@ function App() {
         }
 
 
-    }, [connectionId, connectionActive])
+    }, [connectionId, connectionTrusted])
 
   return (
     <div className="App">
@@ -38,7 +38,7 @@ function App() {
 
 
           {
-              connectionActive ?
+              connectionTrusted ?
 
                   <ConnectionPage connectionId={connectionId}/>
                   : <>

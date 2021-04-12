@@ -1,8 +1,9 @@
 aiohttp
 gunicorn
-aries-basic-controller
+aries-cloudcontroller
 colored
 qrcode
 aiohttp_cors
 requests
 bs4
+nest_asyncio

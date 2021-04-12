@@ -31,6 +31,18 @@ services:
       "-c",
       "python -u app/main.py;"
     ]
+  agent-admin:
+    build:
+      context: agent-admin
+      dockerfile: Dockerfile
+    depends_on:
+      - agent
+    networks:
+      - agent-domain
+    volumes:
+      - ./agent-admin/notebooks:/workspace
+    ports:
+      - "8888:8888"
   agent-wallet-db:
     image: postgres:11
     container_name: agent-wallet-db
@@ -62,6 +74,7 @@ services:
       ACAPY_WALLET_NAME: ${WALLET_NAME}
       ACAPY_WALLET_KEY: ${WALLET_KEY}
       ACAPY_WALLET_TYPE: indy
+#      ACAPY_WALLET_SEED: ${WALLET_SEED}
       ACAPY_WALLET_STORAGE_TYPE: postgres_storage
       ACAPY_WALLET_STORAGE_CONFIG: '{"url":"agent-wallet-db:5432","wallet_scheme":"MultiWalletSingleTable"}'
       ACAPY_WALLET_STORAGE_CREDS: '{"account":"postgres","password":"dbpass","admin_account":"postgres","admin_password":"dbpass"}'
@@ -78,9 +91,5 @@ services:
       - agent-wallet-db
     networks:
       - agent-domain
-    volumes:
-      - wallet:/home/indy/.indy_client/wallet
 networks:
   agent-domain:
-volumes:
-  wallet:
