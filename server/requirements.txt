@@ -7,3 +7,5 @@ aiohttp_cors
 requests
 bs4
 nest_asyncio
+aioauth
+marshmallow
