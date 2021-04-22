@@ -145,7 +145,7 @@ class OMAuthorityAgent:
                 print("Verifying Presentation from Data Scientist")
                 verify = loop.run_until_complete(self.agent_controller.proofs.verify_presentation(pres_ex_id))
                 # Completing future with result of the verification - True of False
-                if verify['state'] == "verified":
+                if verify['verified']:
                     self.trusted_client_connection_ids.append(connection_id)
                 self.pending_client_connection_ids.remove(connection_id)
 
