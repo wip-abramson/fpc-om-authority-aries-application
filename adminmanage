@@ -62,13 +62,13 @@ EOF
 # -----------------------------------------------------------------------------------------------------------------
 # Default Settings:
 # -----------------------------------------------------------------------------------------------------------------
-DEFAULT_CONTAINERS="agent-admin
+DEFAULT_CONTAINERS="agent-admin agent-wallet-db
                     agent ngrok-agent"
 
 # -----------------------------------------------------------------------------------------------------------------
 # Production Settings:
 # -----------------------------------------------------------------------------------------------------------------
-PRODUCTION_CONTAINERS="client server
+PRODUCTION_CONTAINERS="agent-admin agent-wallet-db
                     agent"
 
 
@@ -118,27 +118,6 @@ configureEnvironment() {
       ;;
     esac
   done
-
-  # global
-  export COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:controller}"
-  export LEDGER_URL=${LEDGER_URL-http://$DOCKERHOST:9000}
-  export WALLET_TYPE="indy"
-
-
-  # OM_AUTHORITY-agent
-  export AGENT_NAME="OM_AUTHORITY"
-  export ADMIN_PORT=8011
-  export HTTP_PORT=8010
-  export WEBHOOK_PORT=8012
-  export AGENT_WEBHOOK_URL=${AGENT_WEBHOOK_URL:-http://$DOCKERHOST:$WEBHOOK_PORT}
-  export AGENT_ENDPOINT=${AGENT_ENDPOINT:-http://$DOCKERHOST:$HTTP_PORT}
-  export WALLET_SEED="OMAUTH_seed_00000000000000000000"
-  export WALLET_KEY="OM_AUTHORITY_key_0000000000000"
-  export WALLET_NAME="OM_AUTHORITY Wallet"
-  export JUPYTER_PORT="8888"
-  export ADMIN_SECURE="true"
-  export ADMIN_API_KEY="myapikey"
-
 
 }
 

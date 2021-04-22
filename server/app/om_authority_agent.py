@@ -18,7 +18,7 @@ WEBHOOK_HOST = os.getenv('WEBHOOK_HOST')
 WEBHOOK_PORT = os.getenv('WEBHOOK_PORT')
 WEBHOOK_BASE = os.getenv('WEBHOOK_BASE')
 ADMIN_URL = os.getenv('ADMIN_URL')
-API_KEY = os.getenv('API_KEY')
+API_KEY = os.getenv('ACAPY_ADMIN_API_KEY')
 
 print(WEBHOOK_HOST)
 print(WEBHOOK_PORT)

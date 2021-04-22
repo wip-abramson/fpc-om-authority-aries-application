@@ -1,6 +1,6 @@
 aiohttp
 gunicorn
-aries-cloudcontroller
+aries-cloudcontroller==0.1.*
 colored
 qrcode
 aiohttp_cors

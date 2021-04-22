@@ -10,7 +10,7 @@ RUN pip3 install aries-cloudagent
 
 ADD https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 ./jq
 RUN chmod +x ./jq
-COPY startup.sh startup.sh
+COPY startup-prod.sh startup.sh
 RUN chmod +x ./startup.sh
 
 

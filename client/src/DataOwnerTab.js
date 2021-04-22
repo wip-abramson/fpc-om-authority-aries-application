@@ -20,23 +20,35 @@ const DataOwnerTab = ({connectionId}) => {
 
 
     return (
-        <div>
-            <h2>Create Data Owner Invitation</h2>
-            <p>By accepting this invitation in the DataOwner Notebook, you will automatically be issued a credential with the following attributes. Fill them in however you like.</p>
+        <div className="panel-block">
+            <div className="container">
+            <h2 className="title"> Create Data Owner Invitation</h2>
+                <p className="subtitle is-5">The agent that accepts this will be automatically issued a credential with the following attributes. Fill them in however you like.</p>
             <form onSubmit={createInvitation}>
-                <div><label>Name : </label><input value={name} onChange={(e) => setName(e.target.value)}/></div>
-                <div><label>Domain of Data</label><input value={domain} onChange={(e) => setDomain(e.target.value)}/></div>
-                <button type="submit">Generate Invitation</button>
+                <div><label className="label">Name : </label><input className="input" value={name} onChange={(e) => setName(e.target.value)}/></div>
+                <div className="control"><label className="label">Domain of Data</label><input className="input" value={domain} onChange={(e) => setDomain(e.target.value)}/></div>
+                <hr/>
+                <div className="control">
+                    <button className="button is-primary" type="submit">Generate Invitation</button>
+
+                </div>
             </form>
 
             {invitation && (
-                <div>
-                    <h2>Data Owner Invite</h2>
-                    <h3>Copy This</h3>
-                    <textarea readOnly={true} value={invitation}/>
+                <div className="hero">
+                    <div className="hero-body">
+                        <h2 className="title is-4">Data Owner Invite</h2>
+
+                        <div className="message">
+                            <h3 className="message-header">Copy This</h3>
+                            <div className="message-body" >{invitation}</div>
+                        </div>
+                    </div>
+
+
                 </div>
             )}
-
+            </div>
         </div>
     )
 }

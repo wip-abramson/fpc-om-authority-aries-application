@@ -16,12 +16,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8000:8000
-      - ${WEBHOOK_PORT}:${WEBHOOK_PORT}
+      - 3010:3010
 
-    environment:
-      WEBHOOK_HOST: 0.0.0.0
-      ADMIN_URL: http://agent:${ADMIN_PORT}
-      WEBHOOK_PORT: ${WEBHOOK_PORT}
+    env_file:
+      - agent/.env
     networks:
       - agent-domain
     entrypoint: /bin/bash
@@ -29,19 +27,40 @@ services:
       "-c",
       "python -u app/main.py;"
     ]
+  agent-admin:
+    build:
+      context: agent-admin
+      dockerfile: Dockerfile
+    depends_on:
+      - agent
+    env_file:
+      - agent/.env
+    networks:
+      - agent-domain
+    volumes:
+      - ./agent-admin/notebooks:/workspace
+    ports:
+      - "8888:8888"
+  agent-wallet-db:
+    image: postgres:11
+    container_name: agent-wallet-db
+    command: postgres -c listen_addresses='*'
+    env_file:
+      - agent/.env
+    volumes:
+      - ./resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - agent-domain
+    tty: true
   agent:
     build:
       context: agent
       dockerfile: Dockerfile.prod
-    environment:
-      AGENT_NAME: ${AGENT_NAME}
-      PORT: ${HTTP_PORT}
-      ENDPOINT: http://194.61.21.227:${HTTP_PORT}
-      ADMIN_PORT: ${ADMIN_PORT}
-      WEBHOOK_URL: ${WEBHOOK_URL}
+    env_file:
+      - agent/.env
     ports:
-      - ${HTTP_PORT}:${HTTP_PORT}
-      - ${ADMIN_PORT}:${ADMIN_PORT}
+      - 3020:3020
+      - 3021:3021
     networks:
       - agent-domain
 networks:
