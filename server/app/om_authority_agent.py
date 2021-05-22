@@ -15,7 +15,7 @@ logger = logging.getLogger("agent_controller")
 logger.setLevel(logging.INFO)
 
 WEBHOOK_HOST = os.getenv('WEBHOOK_HOST')
-WEBHOOK_PORT = os.getenv('WEBHOOK_PORT')
+WEBHOOK_PORT = int(os.getenv('WEBHOOK_PORT'))
 WEBHOOK_BASE = os.getenv('WEBHOOK_BASE')
 ADMIN_URL = os.getenv('ADMIN_URL')
 API_KEY = os.getenv('ACAPY_ADMIN_API_KEY')
@@ -36,7 +36,9 @@ class OMAuthorityAgent:
 
         self.agent_controller = agent_controller
 
-        asyncio.get_event_loop().run_until_complete(agent_controller.listen_webhooks())
+        asyncio.get_event_loop().run_until_complete(
+            agent_controller.init_webhook_server(webhook_host=WEBHOOK_HOST, webhook_port=WEBHOOK_PORT)
+        )
 
 
         self.agent_listeners = [{"topic":"connections", "handler": self._connections_handler},
@@ -204,7 +206,6 @@ class OMAuthorityAgent:
 
 agent_controller = AriesAgentController(admin_url=ADMIN_URL, api_key=API_KEY)
 
-agent_controller.init_webhook_server(webhook_host=WEBHOOK_HOST, webhook_port=WEBHOOK_PORT)
 om_authority_agent = OMAuthorityAgent(agent_controller)
 
 

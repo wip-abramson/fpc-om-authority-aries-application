@@ -12,7 +12,7 @@ RUN conda install -c conda-forge jupyterlab==3.0.11
 
 #
 #
-RUN pip install aries_cloudcontroller
+RUN pip install aries_cloudcontroller==0.2.6
 #RUN pip install -r requirements.txt
 
 #RUN pip install aiohttp
